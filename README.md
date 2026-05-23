@@ -8,6 +8,7 @@ A robust, portable Computer Based Assessment application featuring dynamic test 
 
 | Requirement | Details |
 |---|---|
+| **OS** | Windows 10 or later (64-bit) |
 | **Java 21+** | Must be installed and available on the system `PATH`. Download from [Oracle JDK 21 for Windows](https://www.oracle.com/in/java/technologies/downloads/#jdk21-windows) |
 | **Python 3.x** | Either a portable interpreter (recommended) or a global installation. |
 
@@ -67,7 +68,7 @@ PRE_EXIST=false
 
 | Key | Type | Description |
 |---|---|---|
-| `CONFIG_LINK` | URL | Public URL of `config.json`. Must contain `dur` (exam duration in minutes) and optionally `solution` (fallback solution URL). |
+| `CONFIG_LINK` | URL | Public URL of `config.json`. See [config.json format](#configjson-format) below. |
 | `QUESTION_LINK` | URL | Public URL of `question.json`, which maps subject names to CSV file URLs. |
 | `SOLUTION_LINK` | URL | Public URL of the master answer-key `solution.json` used by the evaluator. |
 | `DROPBOX_APP_KEY` | String | Dropbox OAuth2 App Key for automatic report uploads. |
@@ -77,6 +78,43 @@ PRE_EXIST=false
 
 > [!NOTE]
 > Set `PRE_EXIST=true` when question and config files are already placed locally (e.g. running in an offline lab). Set to `false` for a standard cloud-hosted deployment.
+
+---
+
+## `config.json` Format
+
+`config.json` is a small JSON file hosted at the URL specified by `CONFIG_LINK` in `.env` (or hardcoded in `Main.java` as `CONFIG_URL`). It is downloaded automatically at startup and saved locally as `C:\CBT\config.json`.
+
+### Minimum Required Format
+
+```json
+{
+  "dur": 180,
+  "solution": "https://example.com/path/to/solution.json"
+}
+```
+
+### Field Reference
+
+| Field | Type | Required | Description |
+|---|---|---|---|
+| `dur` | Integer | **Yes** | Exam duration in **minutes**. Converted to seconds internally. Defaults to `180` if missing. |
+| `solution` | String (URL) | No | Public URL to download `solution.json` after the test ends. Can be overridden by `SOLUTION_LINK` in `.env`. |
+
+### Full Example
+
+```json
+{
+  "dur": 120,
+  "solution": "https://raw.githubusercontent.com/your-org/your-repo/main/solution.json"
+}
+```
+
+> [!IMPORTANT]
+> The `solution` URL in `config.json` acts as a **fallback**. If `SOLUTION_LINK` is set in `.env`, it takes priority over the value in `config.json`.
+
+> [!NOTE]
+> **System Requirement: Windows.** The application is designed to run on Windows. `start_test.bat` and `run_evaluator.bat` are Windows batch scripts. Java and Python must be accessible on the system `PATH` or via the portable interpreter placed in the `Python\` folder.
 
 ---
 
