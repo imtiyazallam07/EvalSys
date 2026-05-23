@@ -1,0 +1,21 @@
+# Environment file
+.env
+
+# Python interpreter and caches
+Python/
+__pycache__/
+*.py[cod]
+*$py.class
+
+# Temporary and downloaded test files
+config.json
+qstns/
+solutions/
+response/
+examinee_details.json
+
+# Java IDE / Build artifacts
+build/
+nbproject/private/
+nbproject/Makefile-genesis.properties
+nbproject/Package-*.properties
