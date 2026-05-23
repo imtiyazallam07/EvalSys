@@ -19,3 +19,5 @@ build/
 nbproject/private/
 nbproject/Makefile-genesis.properties
 nbproject/Package-*.properties
+
+*.pdf
