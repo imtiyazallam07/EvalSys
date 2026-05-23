@@ -37,6 +37,7 @@ Computer Based Test/
 │   └── Computer_Based_Test.jar
 ├── lib/                    ← Java dependency JARs
 ├── src/
+│   ├── Details.java
 │   └── Main.java           ← Java source
 └── Python/                 ← Portable Python interpreter (not committed to Git)
 ```
